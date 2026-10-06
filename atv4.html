@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AutoPrime – Venda de Carros</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--text:#14171f;--muted:#5b6272;--accent:#e63946;--hero:linear-gradient(135deg,#dfe7fd,#fdf0f1);--car:#e63946;--border:#e3e6ee;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1017;--card:#171b25;--text:#f0f2f7;--muted:#9aa2b5;--accent:#ff5d6c;--hero:linear-gradient(135deg,#151a2b,#2a1218);--car:#ff5d6c;--border:#262c3b}}
+:root[data-theme="dark"]{--bg:#0d1017;--card:#171b25;--text:#f0f2f7;--muted:#9aa2b5;--accent:#ff5d6c;--hero:linear-gradient(135deg,#151a2b,#2a1218);--car:#ff5d6c;--border:#262c3b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;transition:background .3s,color .3s}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 5%;border-bottom:1px solid var(--border)}
+.logo{font-weight:800;font-size:1.4rem}.logo span{color:var(--accent)}
+#toggle{cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text);padding:8px 16px;border-radius:999px;font-size:.95rem}
+.hero{display:flex;flex-wrap:wrap;align-items:center;gap:32px;padding:56px 5%;background:var(--hero);transition:background .3s}
+.hero>div{flex:1 1 320px}
+h1{font-size:clamp(2rem,5vw,3.2rem);margin:0 0 16px;line-height:1.1}
+p{color:var(--muted);line-height:1.6}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:700}
+svg{max-width:100%;height:auto}.body{fill:var(--car);transition:fill .3s}.glass{fill:var(--bg)}
+section{padding:48px 5%}h2{text-align:center;margin:0 0 28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;transition:background .3s}
+.card h3{margin:0 0 6px}.price{color:var(--accent);font-weight:800;font-size:1.3rem}
+footer{text-align:center;padding:24px;color:var(--muted);border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Auto<span>Prime</span></div>
+  <button id="toggle" type="button">🌙 Dark mode</button>
+</header>
+
+<div class="hero">
+  <div>
+    <h1>Seu próximo carro está aqui.</h1>
+    <p>Seminovos e zero km com garantia, financiamento facilitado e as melhores condições da região.</p>
+    <a class="btn" href="#modelos">Ver modelos</a>
+  </div>
+  <div>
+    <svg viewBox="0 0 400 180" role="img" aria-label="Carro">
+      <path class="body" d="M20 130 L40 95 Q50 80 75 78 L130 76 L165 45 Q175 38 190 38 L260 40 Q285 42 300 70 L345 80 Q380 88 382 115 L382 130 Z"/>
+      <path class="glass" d="M150 76 L176 52 L225 52 L225 76 Z M238 76 L238 52 L262 53 Q276 58 286 76 Z"/>
+      <circle cx="105" cy="132" r="30" fill="#222"/><circle cx="105" cy="132" r="14" fill="#aaa"/>
+      <circle cx="300" cy="132" r="30" fill="#222"/><circle cx="300" cy="132" r="14" fill="#aaa"/>
+    </svg>
+  </div>
+</div>
+
+<section id="modelos">
+  <h2>Nossos modelos</h2>
+  <div class="grid">
+    <div class="card"><h3>Compacto City</h3><p>Econômico e ideal para o dia a dia.</p><div class="price">R$ 79.900</div></div>
+    <div class="card"><h3>Sedan Premium</h3><p>Conforto e tecnologia para viagens.</p><div class="price">R$ 129.900</div></div>
+    <div class="card"><h3>SUV Aventura</h3><p>Espaço e robustez para toda a família.</p><div class="price">R$ 189.900</div></div>
+  </div>
+</section>
+
+<section style="text-align:center">
+  <h2>Fale com um consultor</h2>
+  <p>Agende um test-drive hoje mesmo.</p>
+  <a class="btn" href="#">Agendar test-drive</a>
+</section>
+
+<footer>© 2026 AutoPrime – Todos os direitos reservados</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('toggle');
+  function isDark(){
+    var t=root.getAttribute('data-theme');
+    if(t) return t==='dark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function label(){btn.textContent=isDark()?'☀️ Light mode':'🌙 Dark mode';}
+  try{var s=localStorage.getItem('theme'); if(s) root.setAttribute('data-theme',s);}catch(e){}
+  label();
+  btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('theme',next);}catch(e){}
+    label();
+  });
+})();
+</script>
+</body>
+</html>

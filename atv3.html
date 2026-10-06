@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mural de Estágios</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f5f9;--surface:#fff;--ink:#12203a;--muted:#5a6780;--line:#d5dce8;--accent:#1d4ed8;--accent-ink:#fff;--mark:#ffd166;--err:#b42318;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1626;--surface:#16213a;--ink:#e8edf7;--muted:#9aa8c4;--line:#2a3856;--accent:#7aa2ff;--accent-ink:#0e1626;--err:#ff8a80}}
+:root[data-theme="dark"]{--bg:#0e1626;--surface:#16213a;--ink:#e8edf7;--muted:#9aa8c4;--line:#2a3856;--accent:#7aa2ff;--accent-ink:#0e1626;--err:#ff8a80}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.55 "Public Sans",system-ui,sans-serif}
+h1,h2{font-family:"Bricolage Grotesque",Georgia,sans-serif;line-height:1.05;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header.hero{padding:56px 0 40px}
+.hero h1{font-weight:800;font-size:clamp(2.4rem,7vw,4.6rem);max-width:12ch}
+.hero h1 mark{background:linear-gradient(transparent 58%,var(--mark) 58%);color:inherit}
+.hero p{max-width:52ch;color:var(--muted);font-size:1.1rem;margin:18px 0 26px}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:12px 22px;font:600 1rem "Public Sans",sans-serif;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.1)}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+section{padding:36px 0}
+h2{font-weight:800;font-size:2rem;margin-bottom:20px}
+form{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px 20px}
+.f{display:flex;flex-direction:column;gap:6px}.f.full{grid-column:1/-1}
+label{font-weight:600;font-size:.92rem}label span{color:var(--err)}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+textarea{min-height:90px;resize:vertical}
+.err{color:var(--err);font-size:.85rem;min-height:1.1em}
+input.bad,select.bad{border-color:var(--err)}
+.actions{grid-column:1/-1;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ok{color:var(--accent);font-weight:600}
+.bar{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.bar h2{margin:0}.bar input{max-width:280px}
+.tw{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:760px}
+th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.88rem;color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+td strong{display:block}td small{color:var(--muted)}
+td a{color:var(--accent)}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:2px 10px;font-size:.85rem}
+.del{background:none;border:0;color:var(--err);cursor:pointer;font:inherit;padding:4px}
+.empty{padding:32px;text-align:center;color:var(--muted)}
+footer{padding:28px 0 40px;color:var(--muted);font-size:.9rem}
+@media (max-width:640px){form{grid-template-columns:1fr;padding:18px}header.hero{padding-top:36px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<h1>Divulgue sua vaga de <mark>estágio</mark></h1>
+<p>Cadastre a vaga no formulário e ela aparece na hora na tabela abaixo, para que os estudantes encontrem e se candidatem.</p>
+<a class="btn" href="#cadastro">Cadastrar vaga</a>
+</header>
+
+<section id="cadastro">
+<h2>Cadastrar vaga</h2>
+<form id="form" novalidate>
+<div class="f"><label for="titulo">Nome da vaga <span>*</span></label><input id="titulo" required placeholder="Ex.: Estágio em Desenvolvimento Web"><div class="err"></div></div>
+<div class="f"><label for="empresa">Empresa <span>*</span></label><input id="empresa" required><div class="err"></div></div>
+<div class="f"><label for="modalidade">Modalidade <span>*</span></label>
+<select id="modalidade" required><option value="">Selecione</option><option>Presencial</option><option>Híbrido</option><option>Remoto</option></select><div class="err"></div></div>
+<div class="f"><label for="local">Cidade</label><input id="local" placeholder="Ex.: Fortaleza, CE"><div class="err"></div></div>
+<div class="f"><label for="bolsa">Bolsa-auxílio (R$)</label><input id="bolsa" type="number" min="0" step="50" placeholder="Ex.: 1200"><div class="err"></div></div>
+<div class="f"><label for="contato">E-mail para candidatura <span>*</span></label><input id="contato" type="email" required placeholder="rh@empresa.com"><div class="err"></div></div>
+<div class="f full"><label for="desc">Descrição</label><textarea id="desc" placeholder="Atividades, requisitos e carga horária"></textarea></div>
+<div class="actions"><button class="btn" type="submit">Publicar vaga</button><span class="ok" id="ok" role="status"></span></div>
+</form>
+</section>
+
+<section id="vagas">
+<div class="bar"><h2>Vagas divulgadas</h2><input id="busca" type="search" placeholder="Buscar por vaga, empresa ou cidade" aria-label="Buscar vagas"></div>
+<div class="tw"><table>
+<thead><tr><th>Vaga</th><th>Modalidade</th><th>Local</th><th>Bolsa</th><th>Contato</th><th>Publicada em</th><th><span class="sr" style="position:absolute;left:-9999px">Ações</span></th></tr></thead>
+<tbody id="corpo"></tbody>
+</table></div>
+</section>
+<footer>Mural de Estágios · Atividade 3</footer>
+</div>
+
+<script>
+var KEY="vagas-estagio-v1";
+var seed=[
+{id:1,titulo:"Estágio em Desenvolvimento Web",empresa:"Tecnova",modalidade:"Híbrido",local:"Fortaleza, CE",bolsa:1400,contato:"rh@tecnova.com",desc:"HTML, CSS e JavaScript.",data:"2026-09-28"},
+{id:2,titulo:"Estágio em Suporte de TI",empresa:"Redelink",modalidade:"Presencial",local:"Fortaleza, CE",bolsa:1100,contato:"vagas@redelink.com",desc:"Atendimento e manutenção.",data:"2026-09-30"}
+];
+function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);if(Array.isArray(d))return d}}catch(e){}return seed.slice()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(vagas))}catch(e){}}
+var vagas=load();
+function esc(s){var d=document.createElement("div");d.textContent=s==null?"":String(s);return d.innerHTML}
+function fmtData(s){var p=s.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
+function render(){
+var q=document.getElementById("busca").value.toLowerCase().trim();
+var lista=vagas.filter(function(v){return (v.titulo+" "+v.empresa+" "+v.local).toLowerCase().indexOf(q)>-1});
+var c=document.getElementById("corpo");
+if(!lista.length){c.innerHTML='<tr><td colspan="7" class="empty">Nenhuma vaga encontrada. Cadastre a primeira no formulário acima.</td></tr>';return}
+c.innerHTML=lista.slice().reverse().map(function(v){
+return "<tr><td><strong>"+esc(v.titulo)+"</strong><small>"+esc(v.empresa)+"</small>"+(v.desc?"<br><small>"+esc(v.desc)+"</small>":"")+"</td>"+
+"<td><span class='tag'>"+esc(v.modalidade)+"</span></td><td>"+esc(v.local||"—")+"</td>"+
+"<td>"+(v.bolsa?"R$ "+Number(v.bolsa).toLocaleString("pt-BR"):"A combinar")+"</td>"+
+"<td><a href='mailto:"+esc(v.contato)+"'>"+esc(v.contato)+"</a></td><td>"+fmtData(v.data)+"</td>"+
+"<td><button class='del' data-id='"+v.id+"' aria-label='Remover vaga "+esc(v.titulo)+"'>Remover</button></td></tr>"}).join("")}
+document.getElementById("form").addEventListener("submit",function(e){
+e.preventDefault();var ok=true;
+["titulo","empresa","modalidade","contato"].forEach(function(id){
+var el=document.getElementById(id),msg=el.parentNode.querySelector(".err"),v=el.value.trim(),bad=!v;
+if(id==="contato"&&v&&!/^\S+@\S+\.\S+$/.test(v)){bad=true;msg.textContent="Informe um e-mail válido."}
+else msg.textContent=bad?"Preencha este campo.":"";
+el.classList.toggle("bad",bad);if(bad)ok=false});
+var o=document.getElementById("ok");
+if(!ok){o.textContent="";return}
+var g=function(i){return document.getElementById(i).value.trim()};
+var hoje=new Date(),m=("0"+(hoje.getMonth()+1)).slice(-2),d=("0"+hoje.getDate()).slice(-2);
+vagas.push({id:Date.now(),titulo:g("titulo"),empresa:g("empresa"),modalidade:g("modalidade"),local:g("local"),bolsa:g("bolsa"),contato:g("contato"),desc:g("desc"),data:hoje.getFullYear()+"-"+m+"-"+d});
+save();render();this.reset();o.textContent="Vaga publicada na tabela.";
+setTimeout(function(){o.textContent=""},4000)});
+document.getElementById("corpo").addEventListener("click",function(e){
+var b=e.target.closest(".del");if(!b)return;
+vagas=vagas.filter(function(v){return String(v.id)!==b.getAttribute("data-id")});save();render()});
+document.getElementById("busca").addEventListener("input",render);
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de Frete por CEP</title>
+<style>
+  :root{--bg:#f4f6fb;--card:#fff;--tx:#1b2330;--mut:#667085;--pri:#1d4ed8;--bd:#e3e8f0}
+  @media (prefers-color-scheme:dark){:root{--bg:#10141c;--card:#1a2030;--tx:#e8ecf4;--mut:#98a2b3;--pri:#6c8cff;--bd:#2a3347}}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--tx);padding:24px 16px}
+  main{max-width:560px;margin:auto}
+  h1{font-size:1.5rem;margin:0 0 4px}
+  p.sub{color:var(--mut);margin:0 0 20px}
+  .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:16px}
+  label{display:block;font-size:.85rem;color:var(--mut);margin:10px 0 4px}
+  input{width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:8px;background:transparent;color:var(--tx);font-size:1rem}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  button{width:100%;margin-top:16px;padding:12px;border:0;border-radius:8px;background:var(--pri);color:#fff;font-size:1rem;font-weight:600;cursor:pointer}
+  button:disabled{opacity:.6}
+  .res div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd)}
+  .res div:last-child{border:0;font-size:1.25rem;font-weight:700;color:var(--pri)}
+  .err{color:#d92d20;margin-top:12px}
+  small{color:var(--mut)}
+  details summary{cursor:pointer;color:var(--mut)}
+</style>
+</head>
+<body>
+<main>
+  <h1>🏍️ Frete por CEP</h1>
+  <p class="sub">Distância da Uninassau até o destino + preço estimado de Uber Moto.</p>
+
+  <div class="card">
+    <label for="orig">CEP da Uninassau (origem)</label>
+    <input id="orig" placeholder="00000-000" maxlength="9" inputmode="numeric">
+    <label for="dest">CEP de destino</label>
+    <input id="dest" placeholder="00000-000" maxlength="9" inputmode="numeric">
+    <details style="margin-top:12px"><summary>Parâmetros da tarifa (editáveis)</summary>
+      <div class="row">
+        <div><label>Base Uber (R$)</label><input id="base" type="number" step="0.1" value="2"></div>
+        <div><label>R$/km Uber</label><input id="km" type="number" step="0.1" value="1.1"></div>
+        <div><label>R$/min Uber</label><input id="min" type="number" step="0.05" value="0.25"></div>
+        <div><label>Mínima Uber (R$)</label><input id="minimo" type="number" step="0.5" value="6"></div>
+        <div><label>Taxa de serviço (R$)</label><input id="taxa" type="number" step="0.5" value="3"></div>
+        <div><label>Adicional frete R$/km</label><input id="adk" type="number" step="0.1" value="0.5"></div>
+      </div>
+    </details>
+    <button id="go">Calcular frete</button>
+    <div id="err" class="err"></div>
+  </div>
+
+  <div class="card res" id="out" hidden>
+    <div><span>Origem</span><span id="ro"></span></div>
+    <div><span>Destino</span><span id="rd"></span></div>
+    <div><span>Distância</span><span id="rdist"></span></div>
+    <div><span>Tempo estimado</span><span id="rt"></span></div>
+    <div><span>Uber Moto (estimado)</span><span id="ru"></span></div>
+    <div><span>Frete total</span><span id="rf"></span></div>
+  </div>
+  <small>APIs: ViaCEP (endereço), Nominatim/OpenStreetMap (coordenadas) e OSRM (rota). O Uber não tem API pública, então o preço é estimado com a tarifa acima.</small>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const brl = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const mask = e => { let v=e.target.value.replace(/\D/g,'').slice(0,8); e.target.value = v.length>5 ? v.slice(0,5)+'-'+v.slice(5) : v; };
+$('orig').addEventListener('input',mask); $('dest').addEventListener('input',mask);
+
+async function viaCep(cep){
+  const c = cep.replace(/\D/g,'');
+  if(c.length!==8) throw new Error('CEP inválido: '+cep);
+  const r = await fetch(`https://viacep.com.br/ws/${c}/json/`);
+  const d = await r.json();
+  if(d.erro) throw new Error('CEP não encontrado: '+cep);
+  return d;
+}
+async function geocode(d){
+  const tentativas = [
+    `${d.logradouro}, ${d.bairro}, ${d.localidade}, ${d.uf}, Brasil`,
+    `${d.logradouro}, ${d.localidade}, ${d.uf}, Brasil`,
+    `${d.bairro}, ${d.localidade}, ${d.uf}, Brasil`
+  ];
+  for(const q of tentativas){
+    if(q.startsWith(', ')) continue;
+    const r = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q='+encodeURIComponent(q));
+    const j = await r.json();
+    if(j.length) return {lat:+j[0].lat, lon:+j[0].lon};
+    await new Promise(s=>setTimeout(s,1100)); // respeita limite do Nominatim
+  }
+  throw new Error('Não foi possível localizar o endereço no mapa.');
+}
+const fmtEnd = d => `${d.logradouro||d.localidade}, ${d.bairro||''} - ${d.localidade}/${d.uf}`;
+
+$('go').onclick = async () => {
+  $('err').textContent=''; $('out').hidden=true;
+  $('go').disabled=true; $('go').textContent='Calculando...';
+  try{
+    const [o,d] = await Promise.all([viaCep($('orig').value), viaCep($('dest').value)]);
+    const po = await geocode(o);
+    await new Promise(s=>setTimeout(s,1100));
+    const pd = await geocode(d);
+    const r = await fetch(`https://router.project-osrm.org/route/v1/driving/${po.lon},${po.lat};${pd.lon},${pd.lat}?overview=false`);
+    const j = await r.json();
+    if(!j.routes||!j.routes.length) throw new Error('Rota não encontrada.');
+    const km = j.routes[0].distance/1000, min = j.routes[0].duration/60;
+    const n = id => parseFloat($(id).value)||0;
+    const uber = Math.max(n('minimo'), n('base') + km*n('km') + min*n('min'));
+    const frete = uber + n('taxa') + km*n('adk');
+    $('ro').textContent = fmtEnd(o); $('rd').textContent = fmtEnd(d);
+    $('rdist').textContent = km.toFixed(1).replace('.',',')+' km';
+    $('rt').textContent = Math.round(min)+' min';
+    $('ru').textContent = brl(uber); $('rf').textContent = brl(frete);
+    $('out').hidden=false;
+  }catch(e){ $('err').textContent = e.message || 'Erro ao calcular.'; }
+  $('go').disabled=false; $('go').textContent='Calcular frete';
+};
+</script>
+</body>
+</html>

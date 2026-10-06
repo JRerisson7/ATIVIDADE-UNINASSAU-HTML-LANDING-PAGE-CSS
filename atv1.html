@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Linho Claro | Roupas leves para todo dia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6f3;--card:#ffffff;--ink:#16202a;--muted:#55616b;--line:#d5dbd3;--sage:#9db8a3;--accent:#2a46c4;--on-accent:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10171d;--card:#18222a;--ink:#eef2ee;--muted:#a3afb7;--line:#2b3842;--sage:#6f8f77;--accent:#8ea2ff;--on-accent:#10171d}}
+:root[data-theme="dark"]{--bg:#10171d;--card:#18222a;--ink:#eef2ee;--muted:#a3afb7;--line:#2b3842;--sage:#6f8f77;--accent:#8ea2ff;--on-accent:#10171d}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Work Sans",system-ui,sans-serif;line-height:1.6}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;line-height:1.1;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--line)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px;gap:16px}
+.logo{font-family:"Fraunces",Georgia,serif;font-weight:800;font-size:1.3rem;text-decoration:none}
+nav{display:flex;gap:20px;font-size:.95rem}
+nav a{text-decoration:none;color:var(--muted)}
+nav a:hover{color:var(--ink)}
+.btn{display:inline-block;background:var(--accent);color:var(--on-accent);padding:14px 26px;border-radius:999px;font-weight:600;text-decoration:none;border:0;font:inherit;font-weight:600;cursor:pointer}
+.btn:hover{filter:brightness(1.1)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:64px 0}
+.hero h1{font-size:clamp(2.4rem,6vw,4.4rem);font-weight:800;letter-spacing:-.02em}
+.hero p{font-size:1.1rem;color:var(--muted);max-width:44ch;margin:20px 0 28px}
+.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;height:360px}
+.swatches span{border-radius:120px 120px 8px 8px;display:block}
+.swatches span:nth-child(1){background:var(--sage);margin-top:40px}
+.swatches span:nth-child(2){background:var(--accent);margin-top:0}
+.swatches span:nth-child(3){background:#e3c9a8;margin-top:70px}
+.swatches span:nth-child(4){background:#c9d3e8;margin-top:20px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(1.7rem,4vw,2.4rem);margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.item .tone{height:140px}
+.item div.txt{padding:18px}
+.item h3{font-size:1.2rem;margin-bottom:6px}
+.item p{margin:0;color:var(--muted);font-size:.95rem}
+.price{display:block;margin-top:10px;font-weight:600}
+.perks{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.perks h3{font-size:1.15rem;margin-bottom:6px}
+.perks p{margin:0;color:var(--muted)}
+blockquote{margin:0;padding:22px;background:var(--card);border-left:5px solid var(--sage);border-radius:0 12px 12px 0}
+blockquote p{margin:0 0 10px}
+blockquote footer{font-size:.9rem;color:var(--muted);border:0}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+form{display:grid;gap:14px}
+label{font-size:.9rem;font-weight:500}
+input,textarea{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;margin-top:4px}
+#ok{color:var(--accent);font-weight:600;min-height:1.5em;margin:0}
+.info p{margin:0 0 12px;color:var(--muted)}
+footer.site{padding:28px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+@media (max-width:760px){
+nav{display:none}
+.hero,.contact{grid-template-columns:1fr}
+.hero{padding:40px 0}
+.swatches{height:220px}
+.grid,.perks{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<a class="logo" href="#topo">Linho Claro</a>
+<nav aria-label="Principal">
+<a href="#colecao">Coleção</a><a href="#diferenciais">Diferenciais</a><a href="#depoimentos">Clientes</a><a href="#contato">Contato</a>
+</nav>
+<a class="btn" href="#contato">Fale conosco</a>
+</div>
+</header>
+
+<main id="topo">
+<div class="wrap hero">
+<div>
+<h1>Roupas de linho para dias quentes</h1>
+<p>Peças leves, de corte solto e cores suaves. Feitas para usar do trabalho ao fim de semana sem perder o conforto.</p>
+<a class="btn" href="#colecao">Ver a coleção</a>
+</div>
+<div class="swatches" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+</div>
+
+<section id="colecao">
+<div class="wrap">
+<h2>Coleção da estação</h2>
+<div class="grid">
+<article class="item"><div class="tone" style="background:var(--sage)"></div><div class="txt"><h3>Camisa de linho</h3><p>Manga longa, botões de madrepérola e caimento solto.</p><span class="price">R$ 189,90</span></div></article>
+<article class="item"><div class="tone" style="background:#e3c9a8"></div><div class="txt"><h3>Calça pantalona</h3><p>Cintura alta com elástico escondido. Do P ao GG.</p><span class="price">R$ 219,90</span></div></article>
+<article class="item"><div class="tone" style="background:#c9d3e8"></div><div class="txt"><h3>Vestido midi</h3><p>Decote quadrado e bolsos laterais. Segue frio ou quente.</p><span class="price">R$ 259,90</span></div></article>
+</div>
+</div>
+</section>
+
+<section id="diferenciais">
+<div class="wrap">
+<h2>Por que comprar na Linho Claro</h2>
+<div class="perks">
+<div><h3>Tecido que respira</h3><p>Linho e algodão selecionados, que mantêm a pele fresca no calor.</p></div>
+<div><h3>Trocas sem complicação</h3><p>Não serviu? Troque em até 30 dias, na loja ou pelo WhatsApp.</p></div>
+<div><h3>Produção em pequenos lotes</h3><p>Poucas peças por modelo, com acabamento feito à mão.</p></div>
+</div>
+</div>
+</section>
+
+<section id="depoimentos">
+<div class="wrap">
+<h2>Quem já usa</h2>
+<div class="grid">
+<blockquote><p>A calça é a mais confortável que já comprei. Uso toda semana.</p><footer>Mariana, cliente desde 2024</footer></blockquote>
+<blockquote><p>Atendimento atencioso e a camisa chegou antes do prazo.</p><footer>Rafael, compra online</footer></blockquote>
+<blockquote><p>O vestido amassa pouco e lava bem. Já comprei em outra cor.</p><footer>Camila, cliente da loja</footer></blockquote>
+</div>
+</div>
+</section>
+
+<section id="contato">
+<div class="wrap contact">
+<div class="info">
+<h2>Venha nos visitar</h2>
+<p><strong>Endereço:</strong> Rua das Flores, 123, Centro</p>
+<p><strong>Horário:</strong> segunda a sábado, das 9h às 18h</p>
+<p><strong>WhatsApp:</strong> (85) 99999-0000</p>
+<p><strong>Instagram:</strong> @linhoclaro</p>
+</div>
+<form id="f">
+<label>Nome<input name="nome" required autocomplete="name"></label>
+<label>E-mail<input type="email" name="email" required autocomplete="email"></label>
+<label>Mensagem<textarea name="msg" rows="4" required></textarea></label>
+<button class="btn" type="submit">Enviar mensagem</button>
+<p id="ok" role="status"></p>
+</form>
+</div>
+</section>
+</main>
+
+<footer class="site"><div class="wrap">© 2026 Linho Claro. Todos os direitos reservados.</div></footer>
+
+<script>
+document.getElementById('f').addEventListener('submit',function(e){
+e.preventDefault();
+document.getElementById('ok').textContent='Mensagem enviada! Responderemos em breve.';
+this.reset();
+});
+</script>
+</body>
+</html>
